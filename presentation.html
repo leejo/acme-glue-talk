@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Glue</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+	  img {
+         max-height: 600px;
+         display: block;
+         margin-left: auto;
+         margin-right: auto;
+		 border: 1px solid #000000;
+	  }
+	  .white {
+        color: white;
+	  }
+		.theBlackBackground {background-color:#000;color: white;}
+	  .remark-slide-content {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	  }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+	  .image-100 img {
+		    width: 100%;
+	  }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, theBlackBackground
+# Glue
+
+(Hit P for the notes)
+
+???
+
+Glue is the working title of a photo project I've been shooting since 2015
+
+---
+class: center, middle, theBlackBackground
+# I Need Your Help
+
+???
+
+And I need your help
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/01.jpg)]
+
+???
+
+I started it at The Swiss Perl Workshop
+
+I've always been fond of this photo, it's one of the first I took
+
+I've got in the region of 800 photos now
+
+I've still got a couple of years left to go, I think, but I've started thinking about the final form
+
+---
+class: center, middle, theBlackBackground
+
+```perl6
+@photos.pick( 50 );
+```
+
+???
+
+The way we usually do this is to pick a selection of photos to form a long edit
+
+Then filter that down to a smaller selection
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/02.jpg)]
+
+???
+
+Another one from 2015
+
+---
+class: center, middle, theBlackBackground
+
+```perl6
+Seq
+```
+
+???
+
+Then we figure out some sort of sequence, a starting point, a journey, and end point
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/03.jpg)]
+
+???
+
+Granada in 2015 also
+
+---
+class: center, middle, theBlackBackground
+
+```perl6
+Pair
+```
+
+???
+
+Often as part of a sequence we pair images
+
+Those which complement each other
+
+Or those which contrast with each other
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/04.jpg)]
+
+???
+
+For example this image from Orlando sort of fits with the next image
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/04.jpg)]
+
+.image-100[![](img/05.jpg)]
+
+???
+
+Can anyone think why?
+
+Geometry. Lots of people, one person. Looking up, looking down
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/05.jpg)]
+
+???
+
+But I started to think about text, and how can I pair text with the images
+
+---
+class: theBlackBackground
+
+<br />
+<br />
+
+```perl
+my @ordered = @{ $required_order // [] }
+	? map { [ @$_{ @{ $required_order } } ] } @{ $chaos }
+	: map { [ @$_{sort keys %$_} ] } @{ $chaos };
+```
+
+.image-100[![](img/05.jpg)]
+
+???
+
+So I came up with this, pairing code snippets with the photos
+
+This is a piece of production code I wrote, we use this in one of our tools
+
+It transforms an array of hashes into an array of arrays where each array
+contains the values from the hash sorted by the original hash keys or
+the passed order of columns (hash slicing)
+
+It fits with the image - we have chaos at the bottom, order at the top
+
+---
+class: middle, theBlackBackground
+
+```perl6
+#!/usr/bin/env perl6
+
+my @court = (
+        [ 'FIN' ],
+        [ 9 ,10 ],
+        [   8   ],
+        [ 6 , 7 ],
+        [   5   ],
+        [   4   ],
+        [ 2 , 3 ],
+        [   1   ],
+);
+
+my $skip = @court.[1..*].pick.pick;
+my @play;
+
+for @court.reverse -> $hop {
+        @play.push( $hop.map( *.subst( /^$skip$/,'🚫' ).list ) );
+}
+
+say @play.reverse.join( "\n" );
+```
+
+???
+
+What about this one? I wrote this yesterday.
+
+---
+class: middle, theBlackBackground
+
+```perl6
+#!/usr/bin/env perl6
+
+my @court = ( [ 'FIN' ],[ 9,10 ],[ 8 ],[ 6,7 ],[ 5 ],[ 4 ],[ 2,3 ],[ 1 ] );
+my $skip  = @court.[1..*].pick.pick;
+my @play;
+
+for @court.reverse -> $hop {
+        @play.push( $hop.map( *.subst( /^$skip$/,'🚫' ).list ) );
+}
+
+say @play.reverse.join( "\n" );
+```
+.image-100[![](img/06.jpg)]
+
+???
+
+It's hopscotch!
+
+This may not be entirely idiomatic perl6, so let me know if so
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/07.jpg)]
+
+???
+
+I guess it would be nice to address this question
+
+---
+class: center, middle, theBlackBackground
+
+# Acme::Glue
+
+### https://metacpan.org/pod/Acme::Glue
+
+???
+
+So I've uploaded this module to CPAN.
+
+I would like it very much if you could contribute a small snippet of code
+
+The code does not have to be perl5 or perl6, it just has to be something
+you're quite fond of for whatever reason
+
+You can create a pull request and I'll add it to the module and it may end
+up in the final photo project
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/08.jpg)]
+
+???
+
+You don't need to worry about it pairing with any particular code as a lot
+of this is serendipitous - photos end up pairing with lots of other photos
+when you have enough of them
+
+If I get enough snippets of code then it will end up that lots of them will
+pair with lots of other photos
+
+And the code snippets will influence the final edit
+
+This DeLorean runs on Perl!
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/09.jpg)]
+
+???
+
+How do you solve the packing problem for camel shaped objects?
+
+As I said, there's a couple more years left of shooting in the project and
+possibly more, but I should start thinking about this now
+
+---
+class: center, middle, theBlackBackground
+
+.image-100[![](img/10.jpg)]
+
+???
+
+I'm not aware of any other photo project like this, so it would be unique.
+
+And I think it would be quite cool
+
+---
+class: center, middle, theBlackBackground
+
+# Acme::Glue
+
+???
+
+Contribute!
+
+Thanks.
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+	var slideshow = remark.create({
+		slideNumberFormat: ""
+	});
+    </script>
+  </body>
+</html>
