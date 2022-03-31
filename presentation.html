@@ -188,8 +188,6 @@ It fits with the image - we have chaos at the bottom, order at the top
 class: middle, theBlackBackground
 
 ```perl6
-#!/usr/bin/env perl6
-
 my @court = (
         [ 'FIN' ],
         [ 9 ,10 ],
@@ -219,8 +217,6 @@ What about this one? I wrote this yesterday.
 class: middle, theBlackBackground
 
 ```perl6
-#!/usr/bin/env perl6
-
 my @court = ( [ 'FIN' ],[ 9,10 ],[ 8 ],[ 6,7 ],[ 5 ],[ 4 ],[ 2,3 ],[ 1 ] );
 my $skip  = @court.[1..*].pick.pick;
 my @play;
@@ -237,7 +233,7 @@ say @play.reverse.join( "\n" );
 
 It's hopscotch!
 
-This may not be entirely idiomatic perl6, so let me know if so
+This may not be entirely idiomatic raku, so let me know if so
 
 ---
 class: center, middle, theBlackBackground
@@ -261,7 +257,7 @@ So I've uploaded this module to CPAN.
 
 I would like it very much if you could contribute a small snippet of code
 
-The code does not have to be perl5 or perl6, it just has to be something
+The code does not have to be perl5 or raku, it just has to be something
 you're quite fond of for whatever reason
 
 You can create a pull request and I'll add it to the module and it may end
