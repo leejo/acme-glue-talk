@@ -290,8 +290,58 @@ class: center, middle, theBlackBackground
 
 How do you solve the packing problem for camel shaped objects?
 
-As I said, there's a couple more years left of shooting in the project and
-possibly more, but I should start thinking about this now
+---
+class: middle, theBlackBackground
+
+```perl
+$str = pack("B*", "0"x32);
+$bits = (1<<$shift);
+vec($str, $off, $width) = $bits;
+$res = unpack("b*",$str);
+$val = unpack("V", $str);
+write;
+```
+
+???
+
+Do you know why Larry added the hex and bit string formats to pack?
+
+---
+class: middle, theBlackBackground
+
+```perl
+$str = pack("B*", "0"x32);
+$bits = (1<<$shift);
+vec($str, $off, $width) = $bits;
+$res = unpack("b*",$str);
+$val = unpack("V", $str);
+write;
+```
+
+.image-100[![](img/11.jpg)]
+
+???
+
+They were added to
+pack for processing data from NASA's Magellan probe. Magellan was in an
+elliptical orbit, using the antenna for the radar mapping when close to
+Venus and for communicating data back to Earth for the rest of the orbit.
+
+There were two transmission units, but one of these failed, and then the
+other developed a fault whereby it would randomly flip the sense of all the
+bits. It was easy to automatically detect complete records with the correct
+sense, and complete records with all the bits flipped. However, this didn't
+recover the records where the sense flipped midway.
+
+A colleague of Larry's
+was able to pretty much eyeball where the records flipped, so they wrote an
+editor named kybble (a pun on the dog food Kibbles 'n Bits) to enable him to
+manually correct the records and recover the data. For this purpose pack
+gained the hex and bit string format specifiers.
+
+git shows that they were added to perl 3.0 in patch #44 (Jan 1991, commit
+27e2fb84680b9cc1), but the patch description makes no mention of their
+addition, let alone the story behind them.
 
 ---
 class: center, middle, theBlackBackground
@@ -300,7 +350,12 @@ class: center, middle, theBlackBackground
 
 ???
 
+As I said, there's a couple more years left of shooting in the project and
+possibly more, but I should start thinking about this now
+
 I'm not aware of any other photo project like this, so it would be unique.
+
+It would document some history.
 
 And I think it would be quite cool
 
